@@ -202,7 +202,6 @@ local function pull_auto<T>(session: Session<T>, transactions: { [TransactionId]
         end)
 
         LOG("FINISHED SAVE")
-        session._.changes = {}
         return new_data
     end)
 
