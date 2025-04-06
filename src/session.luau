@@ -191,12 +191,12 @@ local function pull_auto<T>(session: Session<T>, transactions: { [TransactionId]
         local new_data
         store:UpdateAsync(key, function(value, keyinfo)
             local combined_changes_now = merge(old_changes, session._.changes)
+            session._.changes = {}
             
             LOG("retrieved", value)
             local updated_value = update(session, combined_changes_now, transactions, value, keyinfo)
             new_data = if updated_value == nil then value else updated_value
             LOG(if updated_value ~= nil then "saved new data" else "cancelled update as no change has been made")
-            session._.changes = {}
 
             return updated_value
         end)
